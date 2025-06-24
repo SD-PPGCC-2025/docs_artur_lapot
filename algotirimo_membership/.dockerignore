@@ -1,0 +1,17 @@
+target/
+.git/
+.gitignore
+*.md
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+release-package/
+demo.bat
+demo.sh
+build-all.bat
+package-release.bat
+Cross.toml

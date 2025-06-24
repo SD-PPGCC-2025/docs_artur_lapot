@@ -1,0 +1,39 @@
+services:
+  # Nó seed (primeiro nó do cluster) - constrói a imagem base
+  node1:
+    build: .
+    image: membership-algorithm:latest
+    container_name: membership-node1
+    network_mode: host
+    command: ["node1", "8001"]
+    restart: unless-stopped
+
+  # Segundo nó (conecta ao seed) - usa a imagem já construída
+  node2:
+    image: membership-algorithm:latest
+    container_name: membership-node2
+    network_mode: host
+    command: ["node2", "8002", "127.0.0.1:8001"]
+    depends_on:
+      - node1
+    restart: unless-stopped
+
+  # Terceiro nó (conecta ao seed) - usa a imagem já construída
+  node3:
+    image: membership-algorithm:latest
+    container_name: membership-node3
+    network_mode: host
+    command: ["node3", "8003", "127.0.0.1:8001"]
+    depends_on:
+      - node1
+    restart: unless-stopped
+
+  # Quarto nó (conecta ao seed) - usa a imagem já construída
+  node4:
+    image: membership-algorithm:latest
+    container_name: membership-node4
+    network_mode: host
+    command: ["node4", "8004", "127.0.0.1:8001"]
+    depends_on:
+      - node1
+    restart: unless-stopped
