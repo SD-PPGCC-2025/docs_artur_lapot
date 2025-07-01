@@ -282,10 +282,15 @@ impl MembershipService {
             Message::Join { member } => {
                 let mut members_guard = members.lock().unwrap();
                 let is_new = !members_guard.contains_key(&member.id);
-                members_guard.insert(member.id.clone(), member.clone());
+                
+                let mut corrected_member = member.clone();
+                corrected_member.address = src;
+                
+                members_guard.insert(member.id.clone(), corrected_member.clone());
                 
                 if is_new {
-                    println!("🆕 New member joined: {} at {}", member.id, member.address);
+                    println!("🆕 New member joined: {} at {} (corrected from {})", 
+                            member.id, src, member.address);
                 }
             }
             Message::Leave { member_id } => {
